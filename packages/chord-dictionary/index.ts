@@ -18,6 +18,7 @@ export interface ChordType extends Pcset {
   name: string;
   quality: ChordQuality;
   aliases: string[];
+  optionalIntervals?: string[];
 }
 const NoChordType: ChordType = {
   ...EmptyPcset,
@@ -76,10 +77,11 @@ function getQuality(intervals: string[]): ChordQuality {
     : "Unknown";
 }
 
-function dataToChordType([ivls, name, abbrvs]: string[]) {
+function dataToChordType([ivls, name, abbrvs, optionalIvls]: string[]) {
   const intervals = ivls.split(" ");
+  const optionalIntervals = (optionalIvls || "").split(" ").filter(i => i);
   const aliases = abbrvs.split(" ");
   const quality = getQuality(intervals);
   const set = pcset(intervals);
-  return { ...set, name, quality, intervals, aliases };
+  return { ...set, name, quality, intervals, aliases, optionalIntervals };
 }

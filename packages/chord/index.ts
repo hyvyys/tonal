@@ -19,6 +19,7 @@ interface Chord extends ChordType {
   tonic: string | null;
   type: string;
   notes: NoteName[];
+  optionalNotes: NoteName[] /* also contained in `notes`, can be used to deduce guitar voicing / fingering */;
 }
 
 const NoChord: Chord = {
@@ -32,7 +33,9 @@ const NoChord: Chord = {
   normalized: "",
   aliases: [],
   notes: [],
-  intervals: []
+  optionalNotes: [],
+  intervals: [],
+  optionalIntervals: []
 };
 
 // 6, 64, 7, 9, 11 and 13 are consider part of the chord
@@ -91,10 +94,14 @@ export function chord(src: ChordName | ChordNameTokens): Chord {
   const notes: string[] = tonic
     ? st.intervals.map(i => transposeNote(tonic, i))
     : [];
+  const optionalNotes: string[] =
+    tonic && st.optionalIntervals
+      ? st.optionalIntervals.map(i => transposeNote(tonic, i))
+      : [];
 
   const name = tonic ? tonic + " " + type : type;
 
-  return { ...st, name, type, tonic, notes };
+  return { ...st, name, type, tonic, notes, optionalNotes };
 }
 
 /**

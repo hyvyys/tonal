@@ -2,15 +2,16 @@
  * @private
  * Chord List
  * Source: https://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns
- * Format: ["intervals", "full name", "abrv1 abrv2"]
+ * Format: ["intervals", "full name", "abrv1 abrv2", "optionalIntervals?"]
  */
+/* Section `Not from Wikipedia` at the bottom */
 const CHORDS: string[][] = [
   // ==Major==
   ["1P 3M 5P", "major", "M "],
   ["1P 3M 5P 7M", "major seventh", "maj7 Δ ma7 M7 Maj7"],
   ["1P 3M 5P 7M 9M", "major ninth", "maj9 Δ9"],
   ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13"],
-  ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"],
+  ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6", "5P"],
   ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69"],
   ["1P 3M 5P 7M 11A", "lydian", "maj#4 Δ#4 Δ#11"],
   ["1P 3M 6m 7M", "major seventh b6", "M7b6"],
@@ -50,7 +51,11 @@ const CHORDS: string[][] = [
   ["1P 3M 5P 7M 9M 11A", "major #11 (lydian)", "maj9#11 Δ9#11"],
   ["1P 3M 5P 7m 9A", "dominant #9", "7#9"],
   // ==Legacy==
-  ["1P 2M 4P 5P", "", "sus24 sus4add9"],
+  [
+    "1P 2M 4P 5P",
+    "",
+    "sus24 sus4add9 sus2sus4"
+  ] /* added sus2sus4 for dummies */,
   ["1P 3M 13m", "", "Mb6"],
   ["1P 3M 5A 7M 9M", "", "maj9#5 Maj9#5"],
   ["1P 3M 5A 7m", "", "7#5 +7 7aug aug7"],
@@ -86,7 +91,7 @@ const CHORDS: string[][] = [
   ["1P 3M 5P 7m 9m 9A", "", "7b9#9"],
   ["1P 3M 5P 9M", "", "Madd9 2 add9 add2"],
   ["1P 3M 5P 9m", "", "Maddb9"],
-  ["1P 3M 5d", "", "Mb5"],
+  ["1P 3M 5d", "", "Mb5 (b5)"] /* added parenthesized alias supported by UG */,
   ["1P 3M 5d 6M 7m 9M", "", "13b5"],
   ["1P 3M 5d 7M", "", "M7b5"],
   ["1P 3M 5d 7M 9M", "", "M9b5"],
@@ -124,7 +129,17 @@ const CHORDS: string[][] = [
   ["1P 4P 5P 7m 9M 13M", "", "13sus4 13sus"],
   ["1P 4P 5P 7m 9m 13m", "", "7sus4b9b13 7b9b13sus4"],
   ["1P 4P 7m 10m", "", "4 quartal"],
-  ["1P 5P 7m 9m 11P", "", "11b9"]
+  ["1P 5P 7m 9m 11P", "", "11b9"],
+  /* Not from Wikipedia */
+  ["1P 2M 5P 7M", "major seventh", "maj7sus2 Δsus2 ma7sus2 M7sus2 Maj7sus2"],
+  ["1P 3M 4P 5P", "", "add4 add11"]
 ];
 
-export default CHORDS;
+const THE_CHORDS = CHORDS.map(c => {
+  if (c.length === 3) {
+    c.push("");
+  }
+  return c;
+});
+
+export default THE_CHORDS;

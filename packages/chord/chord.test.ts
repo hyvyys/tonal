@@ -40,6 +40,7 @@ describe("tonal-chord", () => {
       intervals: ["1P", "3M", "5P", "7M"],
       normalized: "100010010001",
       notes: ["C", "E", "G", "B"],
+      optionalNotes: [],
       quality: "Major"
     });
     expect(chord("hello").empty).toBe(true);
